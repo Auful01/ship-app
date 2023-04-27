@@ -13,14 +13,6 @@ class ShipController extends Controller
 {
     use ApiResponse;
 
-    // function __construct()
-    // {
-    //     $this->middleware('permission:ship-list|ship-create|ship-edit|ship-delete', ['only' => ['index', 'show']]);
-    //     $this->middleware('permission:ship-create', ['only' => ['create', 'store']]);
-    //     $this->middleware('permission:ship-edit', ['only' => ['edit', 'update']]);
-    //     $this->middleware('permission:ship-delete', ['only' => ['destroy']]);
-    // }
-
     public function index(Request $request)
     {
         try {
