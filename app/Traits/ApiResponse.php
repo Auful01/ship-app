@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Traits;
+namespace App\Traits;
 
-trait Response
+trait ApiResponse
 {
     public function success($data, $message = null, $code = 200)
     {
