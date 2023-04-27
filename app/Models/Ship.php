@@ -16,6 +16,7 @@ class Ship extends Model
         'nama_kapal',
         'nama_pemilik',
         'alamat_pemilik',
+        'nomor_izin',
         'ukuran_kapal',
         'kapten',
         'jumlah_anggota',

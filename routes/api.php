@@ -27,6 +27,12 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::post('/sent', [EmailController::class, 'otpMail']);
 Route::post('/confirm', [AuthController::class, 'confirmOTP']);
 
+
+Route::prefix('/ship-pub')->group(function () {
+    Route::get('/', [ShipController::class, 'index']);
+    Route::get('/{id}', [ShipController::class, 'show']);
+});
+
 Route::group(['middleware' => ['auth']], function () {
     Route::post('/verify', [AuthController::class, 'accountVerif'])->middleware('can:user-verif');
     Route::prefix('/ship')->group(function () {

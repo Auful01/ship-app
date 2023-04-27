@@ -7,6 +7,7 @@ use App\Traits\ApiResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\URL;
 
 class ShipController extends Controller
 {
@@ -20,10 +21,14 @@ class ShipController extends Controller
     //     $this->middleware('permission:ship-delete', ['only' => ['destroy']]);
     // }
 
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $data = Ship::all();
+            if ($request->segment(2) == 'ship-pub') {
+                $data = Ship::all(['id', 'nama_kapal', 'foto_kapal', 'nama_pemilik', 'nomor_izin', 'status']);
+            } else {
+                $data = Ship::all();
+            }
             return $this->success($data, 'Data Ship');
         } catch (\Throwable $th) {
             //throw $th;
@@ -50,11 +55,15 @@ class ShipController extends Controller
                 $request->file('dokumen_perizinan')->storeAs('dokumen_perizinan', $filename_dokumen, 'public');
             }
 
-            $request['foto_kapal'] = $filename_kapal;
-            $request['dokumen_perizinan'] = $file_dokumen;
+
             $request['user_id'] = Auth::user()->id;
+            $request['nomor_izin'] = "SHIP-" . rand(100000, 999999);
 
             $data = Ship::create($request->all());
+            $data->update([
+                "foto_kapal" => $filename_kapal,
+                "dokumen_perizinan" => $filename_dokumen
+            ]);
 
             DB::commit();
             return $this->success($data, 'Data Ship Created');
