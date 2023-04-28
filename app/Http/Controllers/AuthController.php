@@ -70,7 +70,10 @@ class AuthController extends Controller
                 return $this->error('User not found');
             }
             if ($user->otp == $request->otp) {
-                if ($user->otp_expired_at > Carbon::now()) {
+                $exp = strtotime($user->otp_expired_at);
+                $now = strtotime(Carbon::now());
+                $diff = $exp - $now;
+                if ($diff < 0) {
                     return $this->error('OTP expired');
                 }
                 $user->update([
