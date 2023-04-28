@@ -23,7 +23,8 @@ class Ship extends Model
         'foto_kapal',
         'nomor_izin',
         'dokumen_perizinan',
-        'status'
+        'status',
+        'notes'
     ];
 
 

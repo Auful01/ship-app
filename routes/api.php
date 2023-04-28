@@ -33,14 +33,26 @@ Route::prefix('/ship-pub')->group(function () {
     Route::get('/{id}', [ShipController::class, 'show']);
 });
 
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['middleware' => ['jwt']], function () {
     Route::post('/verify', [AuthController::class, 'accountVerif'])->middleware('can:user-verif');
+    Route::post('/logout', [AuthController::class, 'logout']);
+    Route::get('/profile', [AuthController::class, 'me']);
+
     Route::prefix('/ship')->group(function () {
         Route::get('/', [ShipController::class, 'index'])->middleware('can:ship-list');
         Route::post('/', [ShipController::class, 'store'])->middleware('can:ship-create');
+        Route::put('/verify/{id}', [ShipController::class, 'shipVerify'])->middleware('can:ship-verif');
+        Route::get('/permission/{id}', [ShipController::class, 'permissionDoc'])->middleware('can:ship-list');
         Route::get('/{id}', [ShipController::class, 'show'])->middleware('can:ship-show');
-        Route::put('/{id}', [ShipController::class, 'update'])->middleware('can:ship-edit');
+        Route::post('/{id}', [ShipController::class, 'update'])->middleware('can:ship-edit');
         Route::delete('/{id}', [ShipController::class, 'destroy'])->middleware('can:ship-delete');
+    });
+
+    Route::prefix('/user')->group(function () {
+        Route::get('/', [AuthController::class, 'listUser'])->middleware('can:user-list');
+        Route::get('/{id}', [AuthController::class, 'show'])->middleware('can:user-show');
+        Route::put('/', [AuthController::class, 'updateProfile'])->middleware('can:user-edit');
+        Route::delete('/{id}', [AuthController::class, 'destroy'])->middleware('can:user-delete');
     });
 });
 

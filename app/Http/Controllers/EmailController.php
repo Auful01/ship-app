@@ -22,7 +22,7 @@ class EmailController extends Controller
         $payload = [
             'email' => $payload["email"],
             'subject' => 'OTP Verification',
-            'message' => 'Your OTP is ' . $payload["otp"],
+            'message' => 'Your OTP is ' . $payload["otp"] . ', Please verify your email. OTP will be expired in 5 minutes.',
             'token' => $payload["token"],
         ];
         return $this->sendMail($payload);

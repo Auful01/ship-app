@@ -21,8 +21,12 @@ class PermissionTableSeeder extends Seeder
             'ship-create',
             'ship-edit',
             'ship-delete',
+            'ship-verif',
             'user-verif',
             'user-list',
+            'user-create',
+            'user-edit',
+            'user-delete',
         ];
 
         $roles = [
@@ -37,10 +41,24 @@ class PermissionTableSeeder extends Seeder
         foreach ($roles as $key => $value) {
             if ($value == 'admin') {
                 $role = Role::create(['name' => $value]);
-                $role->givePermissionTo(Permission::all());
+                $role->givePermissionTo([
+                    'ship-list',
+                    'user-edit',
+                    'user-list',
+                    'user-verif',
+                    'user-delete',
+                    'ship-delete',
+                    'ship-verif',
+                    'ship-edit',
+                ]);
             } else {
                 $role = Role::create(['name' => $value]);
-                $role->givePermissionTo(Permission::all());
+                $role->givePermissionTo([
+                    'ship-list',
+                    'ship-create',
+                    'ship-edit',
+                    'user-edit',
+                ]);
             }
         }
     }
