@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CountController;
 use App\Http\Controllers\EmailController;
 use App\Http\Controllers\ShipController;
 use Illuminate\Http\Request;
@@ -26,6 +27,8 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/sent', [EmailController::class, 'otpMail']);
 Route::post('/confirm', [AuthController::class, 'confirmOTP']);
+
+Route::post('/count', [CountController::class, 'count']);
 
 
 Route::prefix('/ship-pub')->group(function () {
